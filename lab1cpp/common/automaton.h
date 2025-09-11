@@ -24,7 +24,6 @@ public:
     
     void displayInputSequence();
     
-    // Геттеры для доступа к данным
     const std::vector<std::string>& getStates() const { return states; }
     const std::vector<std::string>& getInputs() const { return inputs; }
     const std::vector<std::string>& getOutputs() const { return outputs; }
