@@ -1,70 +1,56 @@
-#ifndef MILI_AUTOMATON_H
-#define MILI_AUTOMATON_H
+/* Реализация заголовочного файла Конечного Абстрактного автомата Mealy*/
+
+#ifndef MEALY_H
+#define MEALY_H
 
 #include <stddef.h>
 #include <stdint.h>
 
-// Типы данных согласно определению автомата Мили (стр. 5)
-typedef uint8_t state_t;  // Тип для состояний автомата (A = {a1, a2, ..., aM})
-typedef uint8_t input_t;  // Тип для входных сигналов (Z = {z1, z2, ..., zF})
-typedef uint8_t output_t; // Тип для выходных сигналов (W = {w1, w2, ..., wG})
+typedef uint8_t state_t; /* Переименнованые типы для хранения состояния,
+                            входного/выходного символа */
+typedef uint8_t input_t;
+typedef uint8_t output_t;
 
-// Структура перехода автомата Мили (стр. 6, формула 1.3)
-typedef struct {
-  state_t next_state; // Следующее состояние (δ функция)
-  output_t output;    // Выходной сигнал (λ функция)
-} mili_transition_t;
+typedef struct { /* Структура таблици перехода  */
+  state_t next_state;
+  output_t output;
+} mealy_transition_t;
 
-// Основная структура автомата Мили (стр. 5, формула 1.1)
-typedef struct {
-  state_t current_state; // Текущее состояние am(t)
-  state_t initial_state; // Начальное состояние a1
+typedef struct { /* Структура автомата Мили  */
+  state_t current_state;
+  state_t initial_state;
 
-  // Таблица переходов и выходов (стр. 7-8, таблица 1.3)
-  const mili_transition_t **transition_table;
+  const mealy_transition_t **transiotion_table;
 
-  // Мощности алфавитов (стр. 21 - 4-5 элементов)
-  uint8_t num_states;  // M - количество состояний
-  uint8_t num_inputs;  // F - количество входных сигналов
-  uint8_t num_outputs; // G - количество выходных сигналов
+  uint8_t num_states;
+  uint8_t num_inputs;
+  uint8_t num_outputs;
+} mealy_automaton_t;
 
-} mili_automaton_t;
+void init_mealy_automat(mealy_automaton_t *mealy_automat, state_t initial_state,
+                        const mealy_transition_t **transiotion_table,
+                        uint8_t num_states, uint8_t num_inputs,
+                        uint8_t num_outputs); /* Инициализация автомата Мили  */
 
-// Функция инициализации автомата
-void mili_init(mili_automaton_t *automaton, state_t initial_state,
-               const mili_transition_t **transition_table, uint8_t num_states,
-               uint8_t num_inputs, uint8_t num_outputs);
+output_t
+mealy_process_input(mealy_automaton_t *mealy_automat,
+                    input_t input); /* Процесс получаения выходного значения  */
 
-// Функция обработки входного сигнала (стр. 6)
-output_t mili_process_input(mili_automaton_t *automaton, input_t input);
+void mealy_reset(
+    mealy_automaton_t *mealy_automat); /* Функция сброса автомата Мили  */
 
-// Функция сброса в начальное состояние
-void mili_reset(mili_automaton_t *automaton);
+state_t get_current_state(
+    const mealy_automaton_t
+        *mealy_automat); /* Функция получения текующего состояния */
 
-// Функция получения текущего состояния
-state_t mili_get_current_state(const mili_automaton_t *automaton);
+output_t
+mealy_final_output(const mealy_automaton_t *mealy_automat, const input_t *input,
+                   size_t sequence_length); /* Функция получения выходного
+                                               значения автомата Мили  */
 
-// Функция заключительного состояния (стр. 9-10)
-state_t mili_final_state(const mili_automaton_t *automaton,
-                         const input_t *input_sequence, size_t sequence_length);
+void mealy_get_reaction(
+    const mealy_automaton_t *mealy_automat, const input_t *input,
+    size_t input_size,
+    output_t *output) /* Функция получения реакции автомата Мили  */
 
-// Функция заключительного выхода (стр. 10)
-output_t mili_final_output(const mili_automaton_t *automaton,
-                           const input_t *input_sequence,
-                           size_t sequence_length);
-
-// Реакция автомата на входное слово (стр. 11, формула 1.5)
-void mili_get_reaction(const mili_automaton_t *automaton,
-                       const input_t *input_sequence, size_t sequence_length,
-                       output_t *output_sequence);
-
-// Вспомогательные макросы для создания таблицы переходов
-#define MILI_TRANSITION(next, out) {next, out}
-#define MILI_TABLE_ROW(...) {__VA_ARGS__}
-
-// Константы для типичных размеров алфавитов (стр. 21)
-#define DEFAULT_NUM_STATES 5
-#define DEFAULT_NUM_INPUTS 5
-#define DEFAULT_NUM_OUTPUTS 5
-
-#endif // MILI_AUTOMATON_H
+#endif // MEALY_H
