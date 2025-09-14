@@ -6,6 +6,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define NUM_STATES 5
+#define NUM_INPUTS 5
+#define NUM_OUTPUTS 5
+#define SEQUENCE_LENGTH 8
+
 typedef uint8_t state_t; /* Переименнованые типы для хранения состояния,
                             входного/выходного символа */
 typedef uint8_t input_t;
@@ -51,6 +56,6 @@ mealy_final_output(const mealy_automaton_t *mealy_automat, const input_t *input,
 void mealy_get_reaction(
     const mealy_automaton_t *mealy_automat, const input_t *input,
     size_t input_size,
-    output_t *output) /* Функция получения реакции автомата Мили  */
+    output_t *output); /* Функция получения реакции автомата Мили  */
 
 #endif // MEALY_H

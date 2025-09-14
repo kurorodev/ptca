@@ -1,19 +1,20 @@
-CXX = g++
-CXXFLAGS = -Wall -std=c++11 -I.
+
+CC = gcc
+CFLAGS = -Wall -std=c99 -I.
 BIN_DIR = bin
 
-# Общие объектные файлы
-COMMON_SOURCES = common/automaton.cpp
-COMMON_OBJECTS = $(COMMON_SOURCES:.cpp=.o)
+# Общие исходные файлы (утилиты)
+UTILS_SOURCES = utils/utils.c
+UTILS_OBJECTS = $(UTILS_SOURCES:.c=.o)
 
 # Файлы для Мили
-MEALY_SOURCES = mealy/mealy.cpp
-MEALY_OBJECTS = $(MEALY_SOURCES:.cpp=.o)
+MEALY_SOURCES = mealy/mealy.c mealy/main_mealy.c
+MEALY_OBJECTS = $(MEALY_SOURCES:.c=.o)
 MEALY_TARGET = $(BIN_DIR)/mealy_simulator
 
 # Файлы для Мура
-MOORE_SOURCES = moore/moore.cpp
-MOORE_OBJECTS = $(MOORE_SOURCES:.cpp=.o)
+MOORE_SOURCES = moore/moore.c moore/main_moore.c
+MOORE_OBJECTS = $(MOORE_SOURCES:.c=.o)
 MOORE_TARGET = $(BIN_DIR)/moore_simulator
 
 # Цели по умолчанию
@@ -23,29 +24,52 @@ all: mealy moore
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
-# Компиляция общего кода
-$(COMMON_OBJECTS): $(COMMON_SOURCES)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Компиляция общих утилит
+utils/%.o: utils/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Компиляция Мили
-$(MEALY_OBJECTS): $(MEALY_SOURCES)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Компиляция файлов Мили
+mealy/%.o: mealy/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Компиляция Мура
-$(MOORE_OBJECTS): $(MOORE_SOURCES)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Компиляция файлов Мура
+moore/%.o: moore/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Сборка симулятора Мили
-mealy: $(BIN_DIR) $(COMMON_OBJECTS) $(MEALY_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $(MEALY_TARGET) $(COMMON_OBJECTS) $(MEALY_OBJECTS) mealy/main_mealy.cpp
+mealy: $(BIN_DIR) $(UTILS_OBJECTS) $(MEALY_OBJECTS)
+	$(CC) $(CFLAGS) -o $(MEALY_TARGET) $(UTILS_OBJECTS) $(MEALY_OBJECTS)
+	@echo "✅ Автомат Мили скомпилирован: $(MEALY_TARGET)"
 
 # Сборка симулятора Мура
-moore: $(BIN_DIR) $(COMMON_OBJECTS) $(MOORE_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $(MOORE_TARGET) $(COMMON_OBJECTS) $(MOORE_OBJECTS) moore/main_moore.cpp
+moore: $(BIN_DIR) $(UTILS_OBJECTS) $(MOORE_OBJECTS)
+	$(CC) $(CFLAGS) -o $(MOORE_TARGET) $(UTILS_OBJECTS) $(MOORE_OBJECTS)
+	@echo "✅ Автомат Мура скомпилирован: $(MOORE_TARGET)"
+
+# Запуск симулятора Мили (компиляция + запуск)
+run-mealy: mealy
+	@echo "🚀 Запуск автомата Мили..."
+	./$(MEALY_TARGET)
+
+# Запуск симулятора Мура (компиляция + запуск)
+run-moore: moore
+	@echo "🚀 Запуск автомата Мура..."
+	./$(MOORE_TARGET)
+
+# Компиляция только Мили (отдельно)
+mealy-only: $(BIN_DIR) $(UTILS_OBJECTS) $(MEALY_OBJECTS)
+	$(CC) $(CFLAGS) -o $(MEALY_TARGET) $(UTILS_OBJECTS) $(MEALY_OBJECTS)
+	@echo "✅ Автомат Мили скомпилирован: $(MEALY_TARGET)"
+
+# Компиляция только Мура (отдельно)
+moore-only: $(BIN_DIR) $(UTILS_OBJECTS) $(MOORE_OBJECTS)
+	$(CC) $(CFLAGS) -o $(MOORE_TARGET) $(UTILS_OBJECTS) $(MOORE_OBJECTS)
+	@echo "✅ Автомат Мура скомпилирован: $(MOORE_TARGET)"
 
 # Очистка
 clean:
 	rm -rf $(BIN_DIR)
-	rm -f $(COMMON_OBJECTS) $(MEALY_OBJECTS) $(MOORE_OBJECTS)
+	rm -f $(UTILS_OBJECTS) $(MEALY_OBJECTS) $(MOORE_OBJECTS)
+	@echo "🧹 Очистка завершена"
 
-.PHONY: all mealy moore clean
+.PHONY: all mealy moore run-mealy run-moore mealy-only moore-only clean
