@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+void init_random();
+
 void print_sequence(const char **name, const uint8_t *sequence, size_t length,
                     const char *prefix);
 

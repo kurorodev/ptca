@@ -3,8 +3,11 @@
 #include <stdio.h>
 
 int main() {
+
+  init_random();
+
   mealy_automaton_t mealy_automat;
-  mealy_transition_t **transition_table = NULL;
+  mealy_transition_t **transition_table;
   input_t input[SEQUENCE_LENGTH];
 
   generate_random_transition_table(&transition_table, NUM_STATES, NUM_INPUTS,

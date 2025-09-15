@@ -9,7 +9,7 @@
 #define NUM_STATES 5
 #define NUM_INPUTS 5
 #define NUM_OUTPUTS 5
-#define SEQUENCE_LENGTH 8
+#define SEQUENCE_LENGTH 5
 
 typedef uint8_t state_t; /* Переименнованые типы для хранения состояния,
                             входного/выходного символа */
@@ -25,7 +25,7 @@ typedef struct { /* Структура автомата Мили  */
   state_t current_state;
   state_t initial_state;
 
-  const mealy_transition_t **transiotion_table;
+  const mealy_transition_t **transition_table;
 
   uint8_t num_states;
   uint8_t num_inputs;
