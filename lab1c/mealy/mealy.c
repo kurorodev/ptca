@@ -69,34 +69,49 @@ state_t get_current_state(const mealy_automaton_t *mealy_automat) {
 output_t mealy_final_output(const mealy_automaton_t *mealy_automat,
                             const input_t *input, size_t sequence_length) {
 
-  if (mealy_automat == NULL || input == NULL || sequence_length == 0)
+  if (mealy_automat == NULL || input == NULL || sequence_length == 0 ||
+      mealy_automat->transiotion_table == NULL) {
     return (output_t)-1;
+  }
 
   state_t current_state = mealy_automat->current_state;
 
+  // Проверим начальное состояние
+  if (current_state >= mealy_automat->num_states) {
+    return (output_t)-1;
+  }
+
   for (size_t i = 0; i < sequence_length - 1; i++) {
-    if (input[i] >= mealy_automat->num_inputs)
+    // Проверяем ВСЕ индексы перед доступом
+    if (current_state >= mealy_automat->num_states ||
+        input[i] >= mealy_automat->num_inputs) {
       return (output_t)-1;
+    }
 
     const mealy_transition_t *transition =
         &mealy_automat->transiotion_table[current_state][input[i]];
 
-    if (transition->next_state >= mealy_automat->num_states)
+    if (transition->next_state >= mealy_automat->num_states) {
       return (output_t)-1;
+    }
 
     current_state = transition->next_state;
   }
 
+  // Обработка последнего входа
   input_t last_input = input[sequence_length - 1];
 
-  if (last_input >= mealy_automat->num_inputs)
+  if (current_state >= mealy_automat->num_states ||
+      last_input >= mealy_automat->num_inputs) {
     return (output_t)-1;
+  }
 
   const mealy_transition_t *final_transition =
       &mealy_automat->transiotion_table[current_state][last_input];
 
-  if (final_transition->next_state >= mealy_automat->num_states)
+  if (final_transition->next_state >= mealy_automat->num_states) {
     return (output_t)-1;
+  }
 
   return final_transition->output;
 }

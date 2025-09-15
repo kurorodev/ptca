@@ -1,6 +1,6 @@
 
 CC = gcc
-CFLAGS = -Wall -std=c99 -I.
+CFLAGS = -Wall -std=c99 -I. -g
 BIN_DIR = bin
 
 # Общие исходные файлы (утилиты)

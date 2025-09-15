@@ -19,5 +19,17 @@ int main() {
   __print_transition_table((const mealy_transition_t **)transition_table,
                            NUM_STATES, NUM_INPUTS);
 
+  puts("<=======================>");
+  print_sequence((const mealy_transition_t **)transition_table, input,
+                 SEQUENCE_LENGTH, "z");
+
+  output_t final_output =
+      mealy_final_output(&mealy_automat, input, SEQUENCE_LENGTH);
+  puts("<=======================>");
+
+  printf("Выход: w%d\n", final_output);
+
+  free_transition_table(&transition_table, NUM_STATES);
+
   return 0;
 }

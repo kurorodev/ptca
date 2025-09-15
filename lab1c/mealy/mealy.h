@@ -53,7 +53,7 @@ mealy_final_output(const mealy_automaton_t *mealy_automat, const input_t *input,
                    size_t sequence_length); /* Функция получения выходного
                                                значения автомата Мили  */
 
-void mealy_get_reaction(
+void __mealy_get_reaction(
     const mealy_automaton_t *mealy_automat, const input_t *input,
     size_t input_size,
     output_t *output); /* Функция получения реакции автомата Мили  */

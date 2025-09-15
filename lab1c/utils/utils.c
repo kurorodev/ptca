@@ -1,9 +1,9 @@
 #include "utils.h"
 #include <stdio.h>
 
-void print_sequence(const char *name, const uint8_t *sequence, size_t length,
+void print_sequence(const char **name, const uint8_t *sequence, size_t length,
                     const char *prefix) {
-  printf("%s", name);
+  printf("%s", *name);
 
   for (size_t i = 0; i < length; i++) {
     printf("%s%d", prefix, sequence[i]);
