@@ -10,8 +10,8 @@ int main() {
   mealy_transition_t **transition_table;
   input_t input[SEQUENCE_LENGTH];
 
-  generate_random_transition_table(&transition_table, NUM_STATES, NUM_INPUTS,
-                                   NUM_OUTPUTS);
+  generate_random_mealy_transition_table(&transition_table, NUM_STATES,
+                                         NUM_INPUTS, NUM_OUTPUTS);
 
   generate_random_input_sequence(input, SEQUENCE_LENGTH, NUM_INPUTS);
 
@@ -19,8 +19,8 @@ int main() {
                      (const mealy_transition_t **)transition_table, NUM_STATES,
                      NUM_INPUTS, NUM_OUTPUTS);
 
-  __print_transition_table((const mealy_transition_t **)transition_table,
-                           NUM_STATES, NUM_INPUTS);
+  __print_mealy_transition_table((const mealy_transition_t **)transition_table,
+                                 NUM_STATES, NUM_INPUTS);
 
   puts("<=======================>");
   print_sequence((const mealy_transition_t **)transition_table, input,
@@ -32,7 +32,7 @@ int main() {
 
   printf("Выход: w%d\n", final_output);
 
-  free_transition_table(&transition_table, NUM_STATES);
+  free_mealy_transition_table(&transition_table, NUM_STATES);
 
   return 0;
 }

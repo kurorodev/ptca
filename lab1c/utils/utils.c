@@ -17,9 +17,10 @@ void print_sequence(const char **name, const uint8_t *sequence, size_t length,
   printf("\n");
 }
 
-void generate_random_transition_table(mealy_transition_t ***table,
-                                      state_t num_states, input_t num_inputs,
-                                      output_t num_outputs) {
+void generate_random_mealy_transition_table(mealy_transition_t ***table,
+                                            state_t num_states,
+                                            input_t num_inputs,
+                                            output_t num_outputs) {
   *table =
       (mealy_transition_t **)malloc(num_states * sizeof(mealy_transition_t *));
 
@@ -34,7 +35,8 @@ void generate_random_transition_table(mealy_transition_t ***table,
   }
 }
 
-void free_transition_table(mealy_transition_t ***table, state_t num_states) {
+void free_mealy_transition_table(mealy_transition_t ***table,
+                                 state_t num_states) {
   if (*table == NULL)
     return;
 
@@ -52,8 +54,8 @@ void generate_random_input_sequence(input_t *input, size_t length,
   }
 }
 
-void __print_transition_table(const mealy_transition_t **table,
-                              state_t num_states, input_t num_inputs) {
+void __print_mealy_transition_table(const mealy_transition_t **table,
+                                    state_t num_states, input_t num_inputs) {
   printf("======ТАБЛИЦА ПЕРЕХОДОВ======\n");
 
   for (state_t state = 0; state < num_states; state++) {
