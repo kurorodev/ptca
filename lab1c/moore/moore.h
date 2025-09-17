@@ -15,7 +15,7 @@ typedef uint8_t output_t;
 
 typedef struct { /*Структура автомата Мура*/
   state_t current_state;
-  state_t input_state;
+  state_t initial_state;
 
   state_t *transitions;
   output_t *outputs;
