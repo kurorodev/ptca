@@ -43,8 +43,8 @@ int main(void) {
   }
 
   print_moore_tables(transitions, outputs, NUM_STATES, NUM_INPUTS);
-  print_sequence("Inputs", inputs, SEQUENCE_LENGTH);
-  print_sequence("Outputs", out_seq, (size_t)written);
+  print_sequence("Входная последовательность: ", inputs, SEQUENCE_LENGTH);
+  print_sequence("Выход: ", out_seq, (size_t)written);
 
   free(transitions);
   free(outputs);
