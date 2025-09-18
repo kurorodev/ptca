@@ -1,4 +1,4 @@
-#include "../utils/utils.h"
+#include "../utils/utils_mealy.h"
 #include "mealy.h"
 #include <stdio.h>
 
@@ -23,7 +23,7 @@ int main() {
                                  NUM_STATES, NUM_INPUTS);
 
   puts("<=======================>");
-  print_sequence(input, SEQUENCE_LENGTH, "z");
+  print_sequence(" ", input, SEQUENCE_LENGTH, "z");
 
   output_t final_output =
       mealy_final_output(&mealy_automat, input, SEQUENCE_LENGTH);
