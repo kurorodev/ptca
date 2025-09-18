@@ -1,12 +1,12 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef UTILS_MEALY_H
+#define UTILS_MEALY_H
 #include "../mealy/mealy.h"
 #include <stdint.h>
 #include <stdlib.h>
 
 void init_random();
 
-void print_sequence(const char **name, const uint8_t *sequence, size_t length,
+void print_sequence(const char *name, const uint8_t *sequence, size_t length,
                     const char *prefix);
 
 void generate_random_mealy_transition_table(mealy_transition_t ***table,

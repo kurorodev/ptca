@@ -4,11 +4,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define NUM_STATES 5
-#define NUM_INPUTS 5
-#define NUM_OUTPUTS 5
-#define SEQUENCE_LENGTH 10
-
 typedef uint8_t state_t;
 typedef uint8_t input_t;
 typedef uint8_t output_t;
