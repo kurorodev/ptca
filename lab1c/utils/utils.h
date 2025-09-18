@@ -6,8 +6,7 @@
 
 void init_random();
 
-void print_sequence(const char **name, const uint8_t *sequence, size_t length,
-                    const char *prefix);
+void print_sequence(const uint8_t *sequence, size_t length, const char *prefix);
 
 void generate_random_mealy_transition_table(mealy_transition_t ***table,
                                             state_t num_states,

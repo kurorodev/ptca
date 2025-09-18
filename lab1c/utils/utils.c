@@ -5,10 +5,8 @@
 // программы)
 void init_random() { srand(time(NULL)); }
 
-void print_sequence(const char **name, const uint8_t *sequence, size_t length,
+void print_sequence(const uint8_t *sequence, size_t length,
                     const char *prefix) {
-  printf("Входная последовательность: %s", *name);
-
   for (size_t i = 0; i < length; i++) {
     printf("%s%d", prefix, sequence[i]);
     if (i < length - 1)
