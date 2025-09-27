@@ -19,34 +19,40 @@ void init_mealy_automat(mealy_automaton_t *mealy_automat, state_t initial_state,
 }
 
 output_t mealy_process_input(mealy_automaton_t *mealy_automat, input_t input) {
-  if (mealy_automat == NULL)
+  if (mealy_automat == NULL) {
     puts("Ошибка мили автомат равен NULL");
-  return (output_t)-1;
+    return (output_t)-1;
+  }
 
-  if (input >= mealy_automat->num_inputs)
+  if (input >= mealy_automat->num_inputs) {
     puts("Ошибка вход больше чем доступно у автомата");
-  return (output_t)-1;
+    return (output_t)-1;
+  }
 
-  if (mealy_automat->current_state >= mealy_automat->num_states)
+  if (mealy_automat->current_state >= mealy_automat->num_states) {
     puts("Ошибка текущеее состояние больше чем количество состояний");
-  return (output_t)-1;
+    return (output_t)-1;
+  }
 
   const mealy_transition_t *transition =
       &mealy_automat->transition_table[mealy_automat->current_state][input];
 
-  if (transition == NULL)
+  if (transition == NULL) {
     puts("Ошибка не создалась таблица перехода");
-  return (output_t)-1;
+    return (output_t)-1;
+  }
 
-  if (transition->next_state >= mealy_automat->current_state)
+  if (transition->next_state >= mealy_automat->current_state) {
     puts("Ошибка состояние переходной таблицы больше чем текущее состояние "
          "автомата");
-  return (output_t)-1;
+    return (output_t)-1;
+  }
 
-  if (transition->output >= mealy_automat->num_outputs)
+  if (transition->output >= mealy_automat->num_outputs) {
     puts("Ошибка выход переходной таблицы больше чем количество выходов у "
          "автомата");
-  return (output_t)-1;
+    return (output_t)-1;
+  }
 
   output_t current_output = transition->output;
 

@@ -4,7 +4,7 @@
 
 int main() {
 
-  init_random();
+  init_mealy_random();
 
   mealy_automaton_t mealy_automat;
   mealy_transition_t **transition_table;
@@ -23,7 +23,7 @@ int main() {
                                  NUM_STATES, NUM_INPUTS);
 
   puts("<=======================>");
-  print_sequence(" ", input, SEQUENCE_LENGTH, "z");
+  __print_sequence(" ", input, SEQUENCE_LENGTH, "z");
 
   output_t final_output =
       mealy_final_output(&mealy_automat, input, SEQUENCE_LENGTH);

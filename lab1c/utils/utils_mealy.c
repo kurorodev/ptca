@@ -3,10 +3,10 @@
 #include <time.h>
 // Инициализация генератора случайных чисел (вызовите это один раз в начале
 // программы)
-void init_random() { srand(time(NULL)); }
+void init_mealy_random() { srand(time(NULL)); }
 
-void print_sequence(const char *name, const uint8_t *sequence, size_t length,
-                    const char *prefix) {
+void __print_sequence(const char *name, const uint8_t *sequence, size_t length,
+                      const char *prefix) {
   printf("Входная последовательность: %s", name);
 
   for (size_t i = 0; i < length; i++) {

@@ -20,7 +20,7 @@ int main(void) {
     return 1;
   }
 
-  init_random();
+  init_moore_random();
 
   generate_random_moore_transition_table(transitions, NUM_STATES, NUM_INPUTS);
   generate_random_moore_output_table(outputs, NUM_STATES, NUM_OUTPUTS);
@@ -28,7 +28,7 @@ int main(void) {
   moore_init(&m, 0, transitions, outputs, NUM_STATES, NUM_INPUTS, NUM_OUTPUTS);
 
   input_t inputs[SEQUENCE_LENGTH];
-  generate_random_input_sequence(inputs, SEQUENCE_LENGTH, NUM_INPUTS);
+  generate_random_moore_input_sequence(inputs, SEQUENCE_LENGTH, NUM_INPUTS);
 
   output_t out_seq[SEQUENCE_LENGTH + 1];
   int written = moore_simulate(&m, inputs, SEQUENCE_LENGTH, out_seq);
@@ -43,8 +43,8 @@ int main(void) {
   }
 
   print_moore_tables(transitions, outputs, NUM_STATES, NUM_INPUTS);
-  print_sequence("Входная последовательность: ", inputs, SEQUENCE_LENGTH);
-  print_sequence("Выход: ", out_seq, (size_t)written);
+  print_moore_sequence("Входная последовательность: ", inputs, SEQUENCE_LENGTH);
+  print_moore_sequence("Выход: ", out_seq, (size_t)written);
 
   free(transitions);
   free(outputs);

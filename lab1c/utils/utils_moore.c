@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void init_random(void) { srand((unsigned)time(NULL)); }
+void init_moore_random(void) { srand((unsigned)time(NULL)); }
 
 void generate_random_moore_transition_table(state_t *transitions,
                                             state_t num_states,
@@ -22,14 +22,15 @@ void generate_random_moore_output_table(output_t *outputs, state_t num_states,
   }
 }
 
-void generate_random_input_sequence(input_t *inputs, size_t length,
-                                    input_t num_inputs) {
+void generate_random_moore_input__sequence(input_t *inputs, size_t length,
+                                           input_t num_inputs) {
   for (size_t i = 0; i < length; i++) {
     inputs[i] = rand() % num_inputs;
   }
 }
 
-void print_sequence(const char *label, const uint8_t *sequence, size_t length) {
+void print_moore_sequence(const char *label, const uint8_t *sequence,
+                          size_t length) {
   printf("%s: ", label);
   for (size_t i = 0; i < length; i++) {
     printf("%u", sequence[i]);
