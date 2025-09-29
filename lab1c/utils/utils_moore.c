@@ -22,8 +22,8 @@ void generate_random_moore_output_table(output_t *outputs, state_t num_states,
   }
 }
 
-void generate_random_moore_input__sequence(input_t *inputs, size_t length,
-                                           input_t num_inputs) {
+void generate_random_moore_input_sequence(input_t *inputs, size_t length,
+                                          input_t num_inputs) {
   for (size_t i = 0; i < length; i++) {
     inputs[i] = rand() % num_inputs;
   }
@@ -54,7 +54,7 @@ void print_moore_tables(const state_t *transitions, const output_t *outputs,
     printf("z%d |", in);
     for (state_t s = 0; s < num_states; s++) {
       state_t next = transitions[s * num_inputs + in];
-      printf(" a%d", next);
+      printf("  a%d", next);
     }
     printf("\n");
   }

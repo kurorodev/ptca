@@ -8,7 +8,7 @@
 #include "../lab1c/utils/utils_moore.h"
 
 int convert_mealy_to_moore(const mealy_automaton_t *mealy,
-                           const moore_automation_t *moore) {
+                           moore_automation_t *moore) {
 
   if (mealy == NULL || moore == NULL) {
     puts("ERROR MEALY OR MOORE EQUAL NULL");
@@ -84,14 +84,19 @@ int main() {
 
   moore_automation_t moore;
 
-  puts("START TO CONVERT!");
+  puts("Начало преобразования");
   if (convert_mealy_to_moore(&mealy, &moore) == 0) {
-    puts("CONVERT IS FINAL!!!");
+    puts("Преобразование завершено");
     print_moore_tables(moore.transitions, moore.outputs, moore.num_states,
                        moore.num_inputs);
+
+    free(moore.transitions);
+    free(moore.outputs);
   } else {
     puts("CONVERT IS ERROR!!!");
   };
+
+  free_mealy_transition_table(&transition_table, NUM_STATES);
 
   exit(EXIT_SUCCESS);
 }

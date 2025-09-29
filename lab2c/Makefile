@@ -40,6 +40,7 @@ utils_moore.o: ../lab1c/utils/utils_moore.c  # Добавляем правило
 
 clean:
 	rm -f $(OBJS) $(TARGET)
+	@echo "Очистка завершена"
 
 run: $(TARGET)
 	./$(TARGET)
